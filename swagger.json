@@ -1,0 +1,235 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Films",
+    "description": "API for Films crud ",
+    "termsOfService": "",
+    "contact": {
+      "email": "janefeitosalima@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:108/films",
+      "description": "Api site"
+    }
+  ],
+  "paths": {
+    "/all-movies": {
+      "get": {
+        "summary": "list of all movies",
+        "description": "Route responsible for listing all films",
+        "tags": ["Films"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schema/Films"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie/{id}": {
+      "get": {
+        "summary": "Search a movies by ID",
+        "description": "Route responsible for searching for a movie by ID",
+        "tags": ["Films"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id from movies to search",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Resquest"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schema/Films"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create": {
+      "post": {
+        "summary": "Register a films",
+        "description": "Route responsible  for registering a new film",
+        "tags": ["Films"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schema/Films"
+              },
+              "examples": {
+                "Films": {
+                  "value": {
+                    "title": "The Next 365 Days",
+                    "director": "Tomasz Mandes, Barbara Białowąs",
+                    "genre": "Drama",
+                    "place": "United States",
+                    "year": 2022,
+                    "protagonist": "Michele Morrone as Massimo",
+                    "summary": "The Next 365 Days is a 2022 Polish erotic drama film directed by Barbara Białowąs and Tomasz Mandes. Serving as a sequel to 365 Days: This Day, it is based on the third novel of a trilogy by Blanka Lipińska, and stars Anna-Maria Sieklucka, Michele Morrone, Simone Susinna, Magdalena Lamparska and Otar Saralidze",
+                    "image": "https://images-na.ssl-images-amazon.com/images/I/41qc-xqNjeL._SX320_BO1,204,203,200_.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description":"Bad Resquest"
+          },
+          "201" : {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "$ref": "#/components/schema/Films"
+              }
+            }
+          }
+        }
+      }
+ 
+    },
+    "/edit/{id}": {
+      "put": {
+        "summary":  "Edit a movie by ID",
+        "description": "Route responsible for editing a movie by ID",
+        "tags": ["Films"],
+        "parameters": [
+           {
+          "name": "id",
+          "in": "path",
+          "description": "Movies id for the search",
+          "required": "true"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema":{
+                "$ref":"#/components/schema/Films"
+              },
+              "examples":{
+                "Films":{
+                  "value": {
+                    "title": "The Next 365 Days",
+                    "director": "Tomasz Mandes, Barbara Białowąs",
+                    "genre": "Drama",
+                    "place": "United States",
+                    "year": 2022,
+                    "protagonist": "Michele Morrone as Massimo",
+                    "summary": "The Next 365 Days is a 2022 Polish erotic drama film directed by Barbara Białowąs and Tomasz Mandes. Serving as a sequel to 365 Days: This Day, it is based on the third novel of a trilogy by Blanka Lipińska, and stars Anna-Maria Sieklucka, Michele Morrone, Simone Susinna, Magdalena Lamparska and Otar Saralidze",
+                    "image": "https://images-na.ssl-images-amazon.com/images/I/41qc-xqNjeL._SX320_BO1,204,203,200_.jpg"
+                  }  
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schema/Films"
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/delete/{id}":{
+      "delete": {
+        "summary": "Delete a movie by ID",
+        "description": "Route responsible for deleting a movie by ID",
+        "tags": ["Films"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Movie id for deletion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Resquest"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+
+    }
+    
+  },
+  "components":{
+    "schema":{
+      "Films": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "director":{
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "place": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "protagonist": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+
+}
